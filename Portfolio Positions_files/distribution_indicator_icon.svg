@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>D grid</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Final-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Additions" transform="translate(-208.000000, -795.000000)">
+            <g id="D-grid" transform="translate(208.000000, 795.000000)">
+                <circle id="Oval" fill="#666666" cx="6" cy="6" r="6"></circle>
+                <path d="M5.656,9 C7.464,9 8.736,7.976 8.736,6.144 C8.736,4.2 7.424,3.336 5.528,3.336 L3.52,3.336 L3.52,9 L5.656,9 Z M5.544,7.92 L4.864,7.92 L4.864,4.424 L5.6,4.424 C6.624,4.424 7.336,5.016 7.336,6.152 C7.336,7.392 6.64,7.92 5.544,7.92 Z" id="D" fill="#FFFFFF" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>
