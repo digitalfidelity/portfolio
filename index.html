@@ -11881,6 +11881,7 @@
         const MS_PER_DAY = 24 * 60 * 60 * 1000;
         const TABLE_SELECTOR = "#positionTable";
         const ROW_SELECTOR = "tbody tr[data-cy='positions-table-row']";
+        const MOCK_YEARS_BACK = 2;
 
         function parseMaturityDate(value) {
             const parts = value.trim().split("/");
@@ -11914,6 +11915,13 @@
             return value.toFixed(3);
         }
 
+        function getMockValuationDate() {
+            const date = new Date();
+            date.setHours(0, 0, 0, 0);
+            date.setFullYear(date.getFullYear() - MOCK_YEARS_BACK);
+            return date;
+        }
+
         function calculateAccruedInterest(quantity, couponRate, maturityDate, today) {
             if (today >= maturityDate) {
                 return 0;
@@ -11940,8 +11948,7 @@
             if (!table) return;
 
             const rows = table.querySelectorAll(ROW_SELECTOR);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
+            const valuationDate = getMockValuationDate();
 
             rows.forEach(function (row) {
                 const cells = row.querySelectorAll("td");
@@ -11957,8 +11964,8 @@
                     return;
                 }
 
-                const durationYears = Math.max(0, (maturityDate - today) / MS_PER_DAY / 365.25);
-                const accruedInterest = calculateAccruedInterest(quantity, couponRate, maturityDate, today);
+                const durationYears = Math.max(0, (maturityDate - valuationDate) / MS_PER_DAY / 365.25);
+                const accruedInterest = calculateAccruedInterest(quantity, couponRate, maturityDate, valuationDate);
 
                 spans[0].textContent = formatCurrency(accruedInterest);
                 spans[1].textContent = formatYears(durationYears);
