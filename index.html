@@ -11876,6 +11876,127 @@
         <img src="./Fidelity Technology _ Bond Analysis and Ladder Experience_files/Feedback+tab+small.png"
              alt="Give Feedback"></button>
 </div>
+<script>
+    (function () {
+        const MS_PER_DAY = 24 * 60 * 60 * 1000;
+        const TABLE_SELECTOR = "#positionTable";
+        const ROW_SELECTOR = "tbody tr[data-cy='positions-table-row']";
+
+        function parseMaturityDate(value) {
+            const parts = value.trim().split("/");
+            if (parts.length !== 3) return null;
+            const month = Number(parts[0]) - 1;
+            const day = Number(parts[1]);
+            const year = Number(parts[2]);
+            if (!Number.isFinite(month) || !Number.isFinite(day) || !Number.isFinite(year)) return null;
+            const date = new Date(year, month, day);
+            return Number.isNaN(date.getTime()) ? null : date;
+        }
+
+        function addMonths(date, months) {
+            const d = new Date(date.getTime());
+            d.setMonth(d.getMonth() + months);
+            return d;
+        }
+
+        function parseNumber(value) {
+            return Number(value.replace(/[$,%\s,]/g, ""));
+        }
+
+        function formatCurrency(value) {
+            return "$" + value.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function formatYears(value) {
+            return value.toFixed(3);
+        }
+
+        function calculateAccruedInterest(quantity, couponRate, maturityDate, today) {
+            if (today >= maturityDate) {
+                return 0;
+            }
+
+            let lastCoupon = new Date(maturityDate.getTime());
+            while (lastCoupon > today) {
+                lastCoupon = addMonths(lastCoupon, -6);
+            }
+            const nextCoupon = addMonths(lastCoupon, 6);
+            const periodDays = (nextCoupon - lastCoupon) / MS_PER_DAY;
+            const accruedDays = Math.max(0, (today - lastCoupon) / MS_PER_DAY);
+            const semiAnnualCoupon = quantity * (couponRate / 100) / 2;
+
+            if (periodDays <= 0 || !Number.isFinite(semiAnnualCoupon)) {
+                return 0;
+            }
+
+            return semiAnnualCoupon * Math.min(1, accruedDays / periodDays);
+        }
+
+        function recalculatePositionsTable() {
+            const table = document.querySelector(TABLE_SELECTOR);
+            if (!table) return;
+
+            const rows = table.querySelectorAll(ROW_SELECTOR);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            rows.forEach(function (row) {
+                const cells = row.querySelectorAll("td");
+                if (cells.length < 12) return;
+
+                const quantity = parseNumber(cells[4].innerText || "");
+                const couponRate = parseNumber(cells[5].innerText || "");
+                const maturityDate = parseMaturityDate(cells[6].innerText || "");
+                const accruedDurationCell = cells[11];
+                const spans = accruedDurationCell.querySelectorAll("span");
+
+                if (!Number.isFinite(quantity) || !Number.isFinite(couponRate) || !maturityDate || spans.length < 2) {
+                    return;
+                }
+
+                const durationYears = Math.max(0, (maturityDate - today) / MS_PER_DAY / 365.25);
+                const accruedInterest = calculateAccruedInterest(quantity, couponRate, maturityDate, today);
+
+                spans[0].textContent = formatCurrency(accruedInterest);
+                spans[1].textContent = formatYears(durationYears);
+            });
+        }
+
+        function scheduleDailyRefresh() {
+            const now = new Date();
+            const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+            const delay = Math.max(1000, nextMidnight.getTime() - now.getTime());
+
+            setTimeout(function () {
+                recalculatePositionsTable();
+                setInterval(recalculatePositionsTable, MS_PER_DAY);
+            }, delay);
+        }
+
+        function init() {
+            recalculatePositionsTable();
+            scheduleDailyRefresh();
+
+            const table = document.querySelector(TABLE_SELECTOR);
+            const tbody = table && table.querySelector("tbody");
+            if (!tbody) return;
+
+            const observer = new MutationObserver(function () {
+                recalculatePositionsTable();
+            });
+            observer.observe(tbody, {childList: true, subtree: true});
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", init);
+        } else {
+            init();
+        }
+    })();
+</script>
 </body>
 </html>
 
