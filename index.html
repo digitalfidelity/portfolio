@@ -11914,6 +11914,13 @@
             return value.toFixed(3);
         }
 
+        function formatParValue(value) {
+            return value.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
         function getTodayDate() {
             const date = new Date();
             date.setHours(0, 0, 0, 0);
@@ -11948,12 +11955,42 @@
             return semiAnnualCoupon * Math.min(1, accruedDays / periodDays);
         }
 
+        function calculateNext12MonthsInterest(quantity, couponRate, maturityDate, today) {
+            if (today >= maturityDate) return 0;
+            const oneYearAhead = new Date(today.getTime());
+            oneYearAhead.setFullYear(oneYearAhead.getFullYear() + 1);
+            const endDate = maturityDate < oneYearAhead ? maturityDate : oneYearAhead;
+            const yearsInWindow = Math.max(0, (endDate - today) / MS_PER_DAY / 365.25);
+            return quantity * (couponRate / 100) * yearsInWindow;
+        }
+
+        function updateSummaryCalculations(totalParValue, next12MonthsInterest, averageDurationYears) {
+            const summaryTiles = document.querySelectorAll(".summary-calculations .pvd-tile__tile");
+            summaryTiles.forEach(function (tile) {
+                const titleNode = tile.querySelector(".summary-title");
+                const valueNode = tile.querySelector(".summary-value");
+                if (!titleNode || !valueNode) return;
+
+                const title = (titleNode.textContent || "").trim();
+                if (title === "Total par value") {
+                    valueNode.textContent = formatParValue(totalParValue);
+                } else if (title === "Next 12 months interest") {
+                    valueNode.textContent = formatCurrency(next12MonthsInterest);
+                } else if (title === "Average duration (years)") {
+                    valueNode.textContent = formatYears(averageDurationYears);
+                }
+            });
+        }
+
         function recalculatePositionsTable() {
             const table = document.querySelector(TABLE_SELECTOR);
             if (!table) return;
 
             const rows = table.querySelectorAll(ROW_SELECTOR);
             const today = getTodayDate();
+            let totalParValue = 0;
+            let totalNext12MonthsInterest = 0;
+            let durationWeightedSum = 0;
 
             rows.forEach(function (row) {
                 const cells = row.querySelectorAll("td");
@@ -11975,10 +12012,18 @@
                 const maxYears = Math.max(0, (maturityDate - startDate) / MS_PER_DAY / 365.25);
                 const durationYears = Math.min(elapsedYears, maxYears);
                 const accruedInterest = calculateAccruedInterest(quantity, couponRate, maturityDate, today);
+                const next12MonthsInterest = calculateNext12MonthsInterest(quantity, couponRate, maturityDate, today);
+
+                totalParValue += quantity;
+                totalNext12MonthsInterest += next12MonthsInterest;
+                durationWeightedSum += durationYears * quantity;
 
                 spans[0].textContent = formatCurrency(accruedInterest);
                 spans[1].textContent = formatYears(durationYears);
             });
+
+            const averageDurationYears = totalParValue > 0 ? durationWeightedSum / totalParValue : 0;
+            updateSummaryCalculations(totalParValue, totalNext12MonthsInterest, averageDurationYears);
         }
 
         function scheduleDailyRefresh() {
