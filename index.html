@@ -11893,12 +11893,6 @@
             return Number.isNaN(date.getTime()) ? null : date;
         }
 
-        function addMonths(date, months) {
-            const d = new Date(date.getTime());
-            d.setMonth(d.getMonth() + months);
-            return d;
-        }
-
         function parseNumber(value) {
             return Number(value.replace(/[$,%\s,]/g, ""));
         }
@@ -11934,25 +11928,13 @@
             return startDate;
         }
 
-        function calculateAccruedInterest(quantity, couponRate, maturityDate, today) {
-            if (today >= maturityDate) {
+        function calculateAccruedInterest(quantity, couponRate, durationYears) {
+            if (!Number.isFinite(quantity) || !Number.isFinite(couponRate) || !Number.isFinite(durationYears)) {
                 return 0;
             }
-
-            let lastCoupon = new Date(maturityDate.getTime());
-            while (lastCoupon > today) {
-                lastCoupon = addMonths(lastCoupon, -6);
-            }
-            const nextCoupon = addMonths(lastCoupon, 6);
-            const periodDays = (nextCoupon - lastCoupon) / MS_PER_DAY;
-            const accruedDays = Math.max(0, (today - lastCoupon) / MS_PER_DAY);
-            const semiAnnualCoupon = quantity * (couponRate / 100) / 2;
-
-            if (periodDays <= 0 || !Number.isFinite(semiAnnualCoupon)) {
-                return 0;
-            }
-
-            return semiAnnualCoupon * Math.min(1, accruedDays / periodDays);
+            const years = Math.max(0, durationYears);
+            const rate = couponRate / 100;
+            return quantity * (Math.pow(1 + rate, years) - 1);
         }
 
         function calculateNext12MonthsInterest(quantity, couponRate, maturityDate, today) {
@@ -12011,7 +11993,7 @@
                 const elapsedYears = Math.max(0, (today - startDate) / MS_PER_DAY / 365.25);
                 const maxYears = Math.max(0, (maturityDate - startDate) / MS_PER_DAY / 365.25);
                 const durationYears = Math.min(elapsedYears, maxYears);
-                const accruedInterest = calculateAccruedInterest(quantity, couponRate, maturityDate, today);
+                const accruedInterest = calculateAccruedInterest(quantity, couponRate, durationYears);
                 const next12MonthsInterest = calculateNext12MonthsInterest(quantity, couponRate, maturityDate, today);
 
                 totalParValue += quantity;
