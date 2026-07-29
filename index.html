@@ -12040,6 +12040,134 @@
         }
     })();
 </script>
+<script>
+    (function () {
+        const MOCK_PAGE_PATH = "./mock-page.html";
+        const PAGE_BASE = "./pages/";
+        const CLICKABLE_SELECTOR = "a, button, [role='button'], [routerlink]";
+        const ACTION_PAGE_MAP = {
+            "summary": "summary.html",
+            "bonds-and-cds": "bonds-cds.html",
+            "bond-funds": "bond-funds.html",
+            "analytics": "analytics.html",
+            "ladders": "ladders.html",
+            "faqs": "faqs.html",
+            "menu": "menu.html",
+            "refresh-positions": "refresh-positions.html",
+            "buy": "buy.html",
+            "bond-details": "bond-details.html",
+            "cash-flow": "cash-flow.html",
+            "print": "print.html",
+            "hypothetical-list": "hypothetical-list.html",
+            "disclosures": "disclosures.html"
+        };
+
+        function normalizeText(value) {
+            return (value || "").replace(/\s+/g, " ").trim();
+        }
+
+        function getClickLabel(element) {
+            return normalizeText(
+                element.getAttribute("aria-label") ||
+                element.getAttribute("title") ||
+                element.getAttribute("data-cy") ||
+                element.textContent ||
+                element.id ||
+                "Action"
+            );
+        }
+
+        function getSourcePath(element) {
+            const href = element.getAttribute("href");
+            const routerLink = element.getAttribute("routerlink");
+            if (routerLink) return routerLink;
+            if (href) return href;
+            return element.id || element.getAttribute("data-cy") || "button-action";
+        }
+
+        function buildMockUrl(element) {
+            const params = new URLSearchParams();
+            params.set("title", getClickLabel(element));
+            params.set("source", getSourcePath(element));
+            return MOCK_PAGE_PATH + "?" + params.toString();
+        }
+
+        function resolveActionKey(element) {
+            const id = (element.id || "").toLowerCase();
+            const dataCy = (element.getAttribute("data-cy") || "").toLowerCase();
+            const routerLink = (element.getAttribute("routerlink") || "").toLowerCase();
+            const href = (element.getAttribute("href") || "").toLowerCase();
+            const text = normalizeText(element.textContent || "").toLowerCase();
+
+            if (dataCy.indexOf("action-buy-button-") === 0 || text === "buy") return "buy";
+            if (dataCy === "positions-description-link" || href.indexOf("fibonddetails") !== -1) return "bond-details";
+            if (dataCy === "refresh-positions-btn" || id === "refresh-positions") return "refresh-positions";
+            if (dataCy === "menu-button" || text.indexOf("glossary") !== -1) return "menu";
+            if (dataCy === "faqs-link" || href.indexOf("fixed-income-analysis-tool-faqs") !== -1) return "faqs";
+            if (routerLink === "summary" || id === "tab-summary") return "summary";
+            if (routerLink === "bonds-and-cds" || id === "tab-bonds-and-cds") return "bonds-and-cds";
+            if (routerLink === "bond-funds" || id === "tab-bond-funds") return "bond-funds";
+            if (routerLink === "analytics" || id === "analytics-link" || text.indexOf("analytics") !== -1) return "analytics";
+            if (routerLink === "ladders" || id === "ladders-link" || text.indexOf("ladders") !== -1) return "ladders";
+            if (dataCy === "suggestion-button" && text.indexOf("cash flow") !== -1) return "cash-flow";
+            if (dataCy === "suggestion-button" && text.indexOf("analytics") !== -1) return "analytics";
+            if (dataCy === "suggestion-button" && text.indexOf("ladder") !== -1) return "ladders";
+            if (text === "print") return "print";
+            if (dataCy.indexOf("hypothetical-list") !== -1 || id.indexOf("hypo") !== -1) return "hypothetical-list";
+            if (dataCy.indexOf("disclosure") !== -1) return "disclosures";
+
+            return "";
+        }
+
+        function buildActionPageUrl(actionKey, element) {
+            const pageFile = ACTION_PAGE_MAP[actionKey];
+            if (!pageFile) return "";
+            const params = new URLSearchParams();
+            params.set("title", getClickLabel(element));
+            params.set("source", getSourcePath(element));
+            return PAGE_BASE + pageFile + "?" + params.toString();
+        }
+
+        function shouldSkip(element) {
+            if (element.closest(".ot-sdk-container, #onetrust-banner-sdk, #onetrust-consent-sdk")) {
+                return true;
+            }
+            if (element.matches("input, select, option, textarea, label")) {
+                return true;
+            }
+            return false;
+        }
+
+        function installClickFallback() {
+            document.addEventListener("click", function (event) {
+                const target = event.target && event.target.closest(CLICKABLE_SELECTOR);
+                if (!target || shouldSkip(target)) return;
+
+                const href = target.getAttribute("href");
+                const isHashAnchor = href && href.trim() === "#";
+                const isFidelityLink = href && /fidelity\.com/i.test(href);
+                const isMissingHref = target.tagName === "A" && !href;
+                const isButtonLike = target.tagName === "BUTTON" || target.getAttribute("role") === "button";
+                const hasRouterLink = !!target.getAttribute("routerlink");
+                const actionKey = resolveActionKey(target);
+                const mappedUrl = buildActionPageUrl(actionKey, target);
+
+                if (!(isHashAnchor || isFidelityLink || isMissingHref || isButtonLike || hasRouterLink || mappedUrl)) {
+                    return;
+                }
+
+                event.preventDefault();
+                window.location.href = mappedUrl || buildMockUrl(target);
+            }, true);
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", installClickFallback);
+        } else {
+            installClickFallback();
+        }
+    })();
+</script>
 </body>
 </html>
 

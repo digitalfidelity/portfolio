@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1b2b4b;
+        }
+
+        .wrap {
+            max-width: 860px;
+            margin: 48px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 28px rgba(15, 32, 80, 0.08);
+            padding: 28px;
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            font-size: 28px;
+        }
+
+        .meta {
+            margin: 8px 0 20px;
+            color: #516182;
+            font-size: 14px;
+        }
+
+        .pill {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #eef3ff;
+            color: #24428f;
+            font-size: 12px;
+        }
+
+        .actions {
+            margin-top: 24px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            border: 1px solid #1f4db8;
+            color: #1f4db8;
+            background: #fff;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .btn.primary {
+            background: #1f4db8;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="card">
+        <h1 id="page-title">Mock destination</h1>
+        <div class="meta">
+            You clicked an interactive control from the main page.
+            <div class="pill" id="page-source">Source: unknown</div>
+        </div>
+        <p>
+            This placeholder page is wired so buttons/links on the saved mock index always navigate somewhere usable.
+        </p>
+        <div class="actions">
+            <a class="btn primary" href="./index.html">Back to main page</a>
+            <a class="btn" id="open-source-link" href="./index.html">Open source link</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const params = new URLSearchParams(window.location.search);
+        const title = (params.get("title") || "Mock destination").trim();
+        const source = (params.get("source") || "unknown").trim();
+
+        document.title = title + " | Mock Page";
+        document.getElementById("page-title").textContent = title;
+        document.getElementById("page-source").textContent = "Source: " + source;
+
+        const openSourceLink = document.getElementById("open-source-link");
+        if (/^(https?:\/\/|mailto:|tel:)/i.test(source)) {
+            openSourceLink.href = source;
+            openSourceLink.target = "_blank";
+            openSourceLink.rel = "noopener";
+        } else {
+            openSourceLink.href = "./index.html";
+        }
+    })();
+</script>
+</body>
+</html>
