@@ -1,31 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bond Details</title>
-    <style>
-        body { margin: 0; font-family: Arial, sans-serif; background: #f4f7fb; color: #12264a; }
-        .wrap { max-width: 860px; margin: 32px auto; padding: 0 16px; }
-        .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 8px 24px rgba(0, 33, 96, 0.08); margin-bottom: 14px; }
-        .kv { display: grid; grid-template-columns: 180px 1fr; gap: 8px 16px; }
-        .k { color: #5c6d92; }
-        a { color: #1f4db8; text-decoration: none; }
-    </style>
-</head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Bond Details</title><link rel="stylesheet" href="./mock-theme.css"></head>
 <body>
-<div class="wrap">
-    <div class="card">
-        <h1>Security Details</h1>
-        <div class="kv">
-            <div class="k">Issuer</div><div>Goldman Sachs Bank USA</div>
-            <div class="k">CUSIP</div><div>38150V3D9</div>
-            <div class="k">Coupon</div><div>4.000%</div>
-            <div class="k">Maturity</div><div>07/08/2027</div>
-            <div class="k">Call Feature</div><div>Call Protected</div>
-        </div>
-    </div>
-    <div class="card"><p><a href="../index.html">Back to dashboard</a></p></div>
-</div>
+<header class="topbar"><div class="topbar-inner"><div class="brand">Fixed Income Dashboard</div><nav class="tabs"><a class="tab-link" href="./bonds-cds.html">Bonds &amp; CDs</a><a class="tab-link active" href="./bond-details.html">Details</a></nav></div></header>
+<main class="page"><section class="panel"><h1 class="title">Security Details</h1><table><tbody><tr><th>Issuer</th><td>Goldman Sachs Bank USA</td></tr><tr><th>CUSIP</th><td>38150V3D9</td></tr><tr><th>Coupon</th><td>4.000%</td></tr><tr><th>Maturity</th><td>07/08/2027</td></tr><tr><th>Call Feature</th><td>Call Protected</td></tr><tr><th>Price / Yield</th><td>100.060 / 3.877%</td></tr></tbody></table><p><a class="back-link" href="../index.html">Back to main page</a></p></section></main>
 </body>
 </html>

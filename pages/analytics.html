@@ -1,28 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analytics</title>
-    <style>
-        body { margin: 0; font-family: Arial, sans-serif; background: #f4f7fb; color: #12264a; }
-        .wrap { max-width: 980px; margin: 32px auto; padding: 0 16px; }
-        .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 8px 24px rgba(0, 33, 96, 0.08); margin-bottom: 16px; }
-        .bar { height: 10px; background: #e5ebf7; border-radius: 999px; overflow: hidden; margin-top: 8px; }
-        .fill { height: 100%; background: #2f63d8; }
-        a { color: #1f4db8; text-decoration: none; }
-    </style>
-</head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Analytics</title><link rel="stylesheet" href="./mock-theme.css"></head>
 <body>
-<div class="wrap">
-    <div class="card">
-        <h1>Portfolio Analytics</h1>
-        <p>Allocation by issuer type and maturity bucket.</p>
-        <p>Bank CDs (54%)</p><div class="bar"><div class="fill" style="width:54%"></div></div>
-        <p>Financial Corp Notes (33%)</p><div class="bar"><div class="fill" style="width:33%"></div></div>
-        <p>Other (13%)</p><div class="bar"><div class="fill" style="width:13%"></div></div>
-        <p><a href="../index.html">Back to dashboard</a></p>
-    </div>
-</div>
+<header class="topbar"><div class="topbar-inner"><div class="brand">Fixed Income Dashboard</div><nav class="tabs"><a class="tab-link" href="./summary.html">Summary</a><a class="tab-link" href="./bonds-cds.html">Bonds &amp; CDs</a><a class="tab-link" href="./bond-funds.html">Bond Funds</a><a class="tab-link active" href="./analytics.html">Analytics</a><a class="tab-link" href="./ladders.html">Ladders</a></nav></div></header>
+<main class="page">
+    <section class="panel"><h1 class="title">Portfolio Analytics</h1><p class="subtitle">Distribution by issuer type and maturity buckets.</p><table><thead><tr><th>Segment</th><th>Allocation</th><th>Risk Note</th></tr></thead><tbody><tr><td>Bank CDs</td><td>54%</td><td>Lower spread volatility</td></tr><tr><td>Financial Notes</td><td>33%</td><td>Moderate credit spread sensitivity</td></tr><tr><td>Other</td><td>13%</td><td>Opportunistic positioning</td></tr></tbody></table><p><a class="back-link" href="../index.html">Back to main page</a></p></section>
+</main>
 </body>
 </html>

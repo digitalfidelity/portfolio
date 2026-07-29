@@ -1,27 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu</title>
-    <style>
-        body { margin: 0; font-family: Arial, sans-serif; background: #f4f7fb; color: #12264a; }
-        .wrap { max-width: 720px; margin: 32px auto; padding: 0 16px; }
-        .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 8px 24px rgba(0, 33, 96, 0.08); }
-        .item { padding: 12px 0; border-bottom: 1px solid #e7edf9; }
-        .item:last-child { border-bottom: 0; }
-        a { color: #1f4db8; text-decoration: none; }
-    </style>
-</head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Menu</title><link rel="stylesheet" href="./mock-theme.css"></head>
 <body>
-<div class="wrap">
-    <div class="card">
-        <h1>Quick Menu</h1>
-        <div class="item"><strong>Glossary</strong> - Definitions for yield, duration, and call features.</div>
-        <div class="item"><strong>Download CSV</strong> - Export current table positions.</div>
-        <div class="item"><strong>Sign Out</strong> - End your dashboard session securely.</div>
-        <p><a href="../index.html">Back to dashboard</a></p>
-    </div>
-</div>
+<header class="topbar"><div class="topbar-inner"><div class="brand">Fixed Income Dashboard</div><nav class="tabs"><a class="tab-link active" href="./menu.html">Menu</a></nav></div></header>
+<main class="page"><section class="panel"><h1 class="title">Quick Menu</h1><div class="list-row"><span>Glossary</span><strong>Open</strong></div><div class="list-row"><span>Download positions CSV</span><strong>Ready</strong></div><div class="list-row"><span>Sign out</span><strong>Protected action</strong></div><p><a class="back-link" href="../index.html">Back to main page</a></p></section></main>
 </body>
 </html>

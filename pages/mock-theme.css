@@ -1,0 +1,151 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #0e1f44;
+}
+
+.topbar {
+    background: #fff;
+    border-bottom: 1px solid #dde4f3;
+    box-shadow: 0 2px 8px rgba(15, 40, 100, 0.06);
+}
+
+.topbar-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.brand {
+    font-size: 18px;
+    font-weight: 700;
+    color: #14326f;
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tab-link {
+    text-decoration: none;
+    color: #214b9b;
+    border: 1px solid #c6d4f3;
+    background: #f7faff;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+.tab-link.active {
+    background: #214b9b;
+    color: #fff;
+    border-color: #214b9b;
+}
+
+.page {
+    max-width: 1180px;
+    margin: 20px auto 40px;
+    padding: 0 18px;
+}
+
+.panel {
+    background: #fff;
+    border: 1px solid #e1e8f5;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(18, 41, 98, 0.08);
+    padding: 18px;
+    margin-bottom: 14px;
+}
+
+.title {
+    margin: 0 0 8px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #173a80;
+}
+
+.subtitle {
+    margin: 0;
+    color: #4e6089;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 12px;
+}
+
+.metric {
+    border: 1px solid #e3e9f6;
+    border-radius: 10px;
+    padding: 12px;
+    background: #fbfdff;
+}
+
+.metric-label {
+    color: #5b6c91;
+    font-size: 12px;
+}
+
+.metric-value {
+    margin-top: 5px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #173a80;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+th, td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #e7edf9;
+    font-size: 14px;
+}
+
+th {
+    color: #5b6c91;
+    font-weight: 600;
+    background: #f7faff;
+}
+
+.back-link {
+    color: #214b9b;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.list-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-bottom: 1px solid #e8eef9;
+    padding: 10px 0;
+    font-size: 14px;
+}
+
+.list-row:last-child {
+    border-bottom: 0;
+}
+
+.tag {
+    display: inline-block;
+    font-size: 12px;
+    color: #214b9b;
+    background: #eaf1ff;
+    border-radius: 999px;
+    padding: 4px 10px;
+}

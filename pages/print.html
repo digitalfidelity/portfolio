@@ -1,28 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Print Preview</title>
-    <style>
-        body { margin: 0; font-family: Arial, sans-serif; background: #f4f7fb; color: #12264a; }
-        .wrap { max-width: 760px; margin: 32px auto; padding: 0 16px; }
-        .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 8px 24px rgba(0, 33, 96, 0.08); }
-        .check { margin: 10px 0; }
-        a { color: #1f4db8; text-decoration: none; }
-    </style>
-</head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Print Preview</title><link rel="stylesheet" href="./mock-theme.css"></head>
 <body>
-<div class="wrap">
-    <div class="card">
-        <h1>Print Preview</h1>
-        <p>Choose sections to include in your print output:</p>
-        <div class="check">[x] Summary calculations</div>
-        <div class="check">[x] Bond/CD positions table</div>
-        <div class="check">[ ] Suggestions section</div>
-        <div class="check">[x] Disclosures</div>
-        <p><a href="../index.html">Back to dashboard</a></p>
-    </div>
-</div>
+<header class="topbar"><div class="topbar-inner"><div class="brand">Fixed Income Dashboard</div><nav class="tabs"><a class="tab-link active" href="./print.html">Print</a></nav></div></header>
+<main class="page"><section class="panel"><h1 class="title">Print Preview Settings</h1><div class="list-row"><span>Summary calculations</span><strong>Included</strong></div><div class="list-row"><span>Bond/CD positions table</span><strong>Included</strong></div><div class="list-row"><span>Suggestions section</span><strong>Excluded</strong></div><div class="list-row"><span>Disclosures</span><strong>Included</strong></div><p><a class="back-link" href="../index.html">Back to main page</a></p></section></main>
 </body>
 </html>

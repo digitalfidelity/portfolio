@@ -4,34 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Summary</title>
-    <style>
-        body { margin: 0; font-family: Arial, sans-serif; background: #f4f7fb; color: #12264a; }
-        .wrap { max-width: 980px; margin: 32px auto; padding: 0 16px; }
-        .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 8px 24px rgba(0, 33, 96, 0.08); margin-bottom: 16px; }
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        .kpi { padding: 14px; border: 1px solid #e4eaf6; border-radius: 10px; }
-        .kpi .label { font-size: 12px; color: #5c6d92; }
-        .kpi .value { font-size: 22px; font-weight: 700; margin-top: 6px; }
-        a { color: #1f4db8; text-decoration: none; }
-    </style>
+    <link rel="stylesheet" href="./mock-theme.css">
 </head>
 <body>
-<div class="wrap">
-    <div class="card">
-        <h1>Portfolio Summary</h1>
-        <p>As of today, your fixed income portfolio remains income-focused with near-term maturities and balanced ladder exposure.</p>
-    </div>
-    <div class="card grid">
-        <div class="kpi"><div class="label">Total Par Value</div><div class="value">$100,000</div></div>
-        <div class="kpi"><div class="label">Next 12 Months Interest</div><div class="value">$4,100</div></div>
-        <div class="kpi"><div class="label">Average Duration</div><div class="value">1.2 yrs</div></div>
-    </div>
-    <div class="card">
-        <h3>Recent activity</h3>
-        <p>- Extended Goldman Sachs CD maturity by one year.</p>
-        <p>- Updated quantity and recalculated accrued interest.</p>
-        <p><a href="../index.html">Back to dashboard</a></p>
-    </div>
-</div>
+<header class="topbar"><div class="topbar-inner"><div class="brand">Fixed Income Dashboard</div><nav class="tabs"><a class="tab-link active" href="./summary.html">Summary</a><a class="tab-link" href="./bonds-cds.html">Bonds &amp; CDs</a><a class="tab-link" href="./bond-funds.html">Bond Funds</a><a class="tab-link" href="./analytics.html">Analytics</a><a class="tab-link" href="./ladders.html">Ladders</a></nav></div></header>
+<main class="page">
+    <section class="panel"><h1 class="title">Portfolio Summary</h1><p class="subtitle">Overview of par value, projected income, and duration based on your current selected positions.</p></section>
+    <section class="panel metrics">
+        <div class="metric"><div class="metric-label">Total Par Value</div><div class="metric-value">$100,000</div></div>
+        <div class="metric"><div class="metric-label">Next 12 Months Interest</div><div class="metric-value">$4,100</div></div>
+        <div class="metric"><div class="metric-label">Average Duration</div><div class="metric-value">1.2 yrs</div></div>
+    </section>
+    <section class="panel"><div class="tag">Recent Activity</div><div class="list-row"><span>Goldman Sachs 07/08/2027 maturity extension applied</span><strong>Updated</strong></div><div class="list-row"><span>Accrued interest now uses compounded APR model</span><strong>Updated</strong></div><p><a class="back-link" href="../index.html">Back to main page</a></p></section>
+</main>
 </body>
 </html>
