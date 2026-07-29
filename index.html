@@ -11881,7 +11881,6 @@
         const MS_PER_DAY = 24 * 60 * 60 * 1000;
         const TABLE_SELECTOR = "#positionTable";
         const ROW_SELECTOR = "tbody tr[data-cy='positions-table-row']";
-        const MOCK_YEARS_BACK = 2;
 
         function parseMaturityDate(value) {
             const parts = value.trim().split("/");
@@ -11915,11 +11914,17 @@
             return value.toFixed(3);
         }
 
-        function getMockValuationDate() {
+        function getTodayDate() {
             const date = new Date();
             date.setHours(0, 0, 0, 0);
-            date.setFullYear(date.getFullYear() - MOCK_YEARS_BACK);
             return date;
+        }
+
+        function getPositionStartDate(maturityDate, cusip) {
+            const startDate = new Date(maturityDate.getTime());
+            const yearsBack = cusip === "38150V3D9" ? 1 : 2;
+            startDate.setFullYear(startDate.getFullYear() - yearsBack);
+            return startDate;
         }
 
         function calculateAccruedInterest(quantity, couponRate, maturityDate, today) {
@@ -11948,12 +11953,13 @@
             if (!table) return;
 
             const rows = table.querySelectorAll(ROW_SELECTOR);
-            const valuationDate = getMockValuationDate();
+            const today = getTodayDate();
 
             rows.forEach(function (row) {
                 const cells = row.querySelectorAll("td");
                 if (cells.length < 12) return;
 
+                const cusip = (cells[3].innerText || "").split(/\s+/)[0].trim();
                 const quantity = parseNumber(cells[4].innerText || "");
                 const couponRate = parseNumber(cells[5].innerText || "");
                 const maturityDate = parseMaturityDate(cells[6].innerText || "");
@@ -11964,8 +11970,11 @@
                     return;
                 }
 
-                const durationYears = Math.max(0, (maturityDate - valuationDate) / MS_PER_DAY / 365.25);
-                const accruedInterest = calculateAccruedInterest(quantity, couponRate, maturityDate, valuationDate);
+                const startDate = getPositionStartDate(maturityDate, cusip);
+                const elapsedYears = Math.max(0, (today - startDate) / MS_PER_DAY / 365.25);
+                const maxYears = Math.max(0, (maturityDate - startDate) / MS_PER_DAY / 365.25);
+                const durationYears = Math.min(elapsedYears, maxYears);
+                const accruedInterest = calculateAccruedInterest(quantity, couponRate, maturityDate, today);
 
                 spans[0].textContent = formatCurrency(accruedInterest);
                 spans[1].textContent = formatYears(durationYears);
