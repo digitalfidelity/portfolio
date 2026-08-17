@@ -8596,11 +8596,11 @@
                                                 _ngcontent-ng-c968315277=""><span _ngcontent-ng-c968315277="">CD</span>
                                         </td>
                                         <td _ngcontent-ng-c968315277="" class="pvd-table__data-cell"><span
-                                                _ngcontent-ng-c968315277="">1,700</span><!----></td>
+                                                _ngcontent-ng-c968315277="">1,839</span><!----></td>
                                         <td _ngcontent-ng-c968315277="" class="pvd-table__data-cell"><span
                                                 _ngcontent-ng-c968315277="">4.000%</span></td>
                                         <td _ngcontent-ng-c968315277="" class="pvd-table__data-cell sorted-column"><span
-                                                _ngcontent-ng-c968315277="">08/12/2026</span></td>
+                                                _ngcontent-ng-c968315277="">08/12/2027</span></td>
                                         <td _ngcontent-ng-c968315277="" class="pvd-table__data-cell"><span
                                                 _ngcontent-ng-c968315277="">Call Protected</span><br
                                                 _ngcontent-ng-c968315277=""><span _ngcontent-ng-c968315277="">--</span>
@@ -8611,17 +8611,17 @@
                                         </td>
                                         <td _ngcontent-ng-c968315277=""
                                             class="pvd-table__data-cell pvd-table__data-cell--right"><span
-                                                _ngcontent-ng-c968315277="">100.111 </span><br
+                                                _ngcontent-ng-c968315277="">100.000 </span><br
                                                 _ngcontent-ng-c968315277=""><span
-                                                _ngcontent-ng-c968315277="">$1,701.87</span></td>
+                                                _ngcontent-ng-c968315277="">$1,839.00</span></td>
                                         <td _ngcontent-ng-c968315277=""
                                             class="pvd-table__data-cell pvd-table__data-cell--right"><span
-                                                _ngcontent-ng-c968315277="">3.839</span></td>
+                                                _ngcontent-ng-c968315277="">4.000</span></td>
                                         <td _ngcontent-ng-c968315277=""
                                             class="pvd-table__data-cell pvd-table__data-cell--right"><span
-                                                _ngcontent-ng-c968315277="">$10.99</span><br
+                                                _ngcontent-ng-c968315277="">$1.01</span><br
                                                 _ngcontent-ng-c968315277=""><span
-                                                _ngcontent-ng-c968315277="">0.812</span></td>
+                                                _ngcontent-ng-c968315277="">0.055</span></td>
                                         <td _ngcontent-ng-c968315277="" class="pvd-table__data-cell">
                                             <div _ngcontent-ng-c968315277="" class="actions-column-button-container">
                                                 <button _ngcontent-ng-c968315277=""
@@ -8662,11 +8662,11 @@
                                                 _ngcontent-ng-c968315277=""><span _ngcontent-ng-c968315277="">CD</span>
                                         </td>
                                         <td _ngcontent-ng-c968315277="" class="pvd-table__data-cell"><span
-                                                _ngcontent-ng-c968315277="">500</span><!----></td>
+                                                _ngcontent-ng-c968315277="">541</span><!----></td>
                                         <td _ngcontent-ng-c968315277="" class="pvd-table__data-cell"><span
                                                 _ngcontent-ng-c968315277="">4.000%</span></td>
                                         <td _ngcontent-ng-c968315277="" class="pvd-table__data-cell sorted-column"><span
-                                                _ngcontent-ng-c968315277="">08/12/2026</span></td>
+                                                _ngcontent-ng-c968315277="">08/12/2027</span></td>
                                         <td _ngcontent-ng-c968315277="" class="pvd-table__data-cell"><span
                                                 _ngcontent-ng-c968315277="">Call Protected</span><br
                                                 _ngcontent-ng-c968315277=""><span _ngcontent-ng-c968315277="">--</span>
@@ -8677,16 +8677,16 @@
                                         </td>
                                         <td _ngcontent-ng-c968315277=""
                                             class="pvd-table__data-cell pvd-table__data-cell--right"><span
-                                                _ngcontent-ng-c968315277="">100.111 </span><br
+                                                _ngcontent-ng-c968315277="">100.000 </span><br
                                                 _ngcontent-ng-c968315277=""><span
-                                                _ngcontent-ng-c968315277="">$500.55</span></td>
+                                                _ngcontent-ng-c968315277="">$541.00</span></td>
                                         <td _ngcontent-ng-c968315277=""
                                             class="pvd-table__data-cell pvd-table__data-cell--right"><span
-                                                _ngcontent-ng-c968315277="">3.839</span></td>
+                                                _ngcontent-ng-c968315277="">4.000</span></td>
                                         <td _ngcontent-ng-c968315277=""
                                             class="pvd-table__data-cell pvd-table__data-cell--right"><span
-                                                _ngcontent-ng-c968315277="">$3.23</span><br _ngcontent-ng-c968315277=""><span
-                                                _ngcontent-ng-c968315277="">0.812</span></td>
+                                                _ngcontent-ng-c968315277="">$0.30</span><br _ngcontent-ng-c968315277=""><span
+                                                _ngcontent-ng-c968315277="">0.055</span></td>
                                         <td _ngcontent-ng-c968315277="" class="pvd-table__data-cell">
                                             <div _ngcontent-ng-c968315277="" class="actions-column-button-container">
                                                 <button _ngcontent-ng-c968315277=""
@@ -11923,7 +11923,9 @@
 
         function getPositionStartDate(maturityDate, cusip) {
             const startDate = new Date(maturityDate.getTime());
-            const yearsBack = cusip === "38150V3D9" ? 1 : 2;
+            const isOneYearRollover = cusip === "38150V3D9" ||
+                (cusip === "38150V4M8" && maturityDate.getFullYear() === 2027);
+            const yearsBack = isOneYearRollover ? 1 : 2;
             startDate.setFullYear(startDate.getFullYear() - yearsBack);
             return startDate;
         }
